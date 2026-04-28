@@ -38,7 +38,7 @@ const orderSchema = new mongoose.Schema(
     },
     items: [orderItemSchema],
     shippingAddress: {
-      fullName: String,
+      name: String,
       phone: String,
       address: String,
       city: String,

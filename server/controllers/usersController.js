@@ -2,8 +2,29 @@ import bcrypt from "bcryptjs"
 import User from "../models/User.js"
 
 export const index = async (req, res) => {
-  const users = await User.find().select('-password')
-  res.json(users)
+  const page = Math.max(Number(req.query.page) || 1, 1)
+  const limit = Math.min(Math.max(Number(req.query.limit) || 10, 1), 100)
+  const skip = (page - 1) * limit
+
+  const total = await User.countDocuments()
+
+  const users = await User.find()
+    .select('-password')
+    .sort({ createdAt: -1 })
+    .skip(skip)
+    .limit(limit)
+
+  res.json({
+    data: users,
+    pagination: {
+      total,
+      page,
+      limit,
+      pages: Math.ceil(total / limit),
+      hasNextPage: page * limit < total,
+      hasPrevPage: page > 1
+    }
+  })
 }
 
 export const show = async (req, res) => {
