@@ -1,8 +1,6 @@
 # Server dependencies
 server/node_modules/
 
-# Root dependencies, if any
-node_modules/
 
 # Env files
 .env
