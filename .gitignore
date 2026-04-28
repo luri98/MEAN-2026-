@@ -1,0 +1,24 @@
+# Server dependencies
+server/node_modules/
+
+# Root dependencies, if any
+node_modules/
+
+# Env files
+.env
+server/.env
+client/.env
+.env.local
+.env.*.local
+
+# Server uploads
+uploads/
+server/uploads/
+
+# Logs
+*.log
+
+# OS / editor
+.DS_Store
+Thumbs.db
+.idea/
