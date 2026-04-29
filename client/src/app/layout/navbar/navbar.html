@@ -6,9 +6,10 @@
                 @for (route of routes; track route.href) {
                    <a
                         #rla="routerLinkActive"
-                        class="flex items-center space-x-1 text-white font-medium transition-all duration-200"
-                        routerLinkActive="decoration-2 underline-offset-4 underline decoration-yellow-400"
+                        class="flex items-center space-x-1 text-white font-medium border-b-2 pb-0.5 transition-all duration-200"
+                        [class]="rla.isActive ? 'border-yellow-400' : 'border-transparent'" 
                         [routerLink]="route.href"
+                        routerLinkActive
                         [routerLinkActiveOptions]="{ exact: route.href === '/' }">
                         <span [innerHTML]="sanitizeSvg(route.svg)"></span>
                         <span class="uppercase">{{ route.name }}</span>
@@ -19,10 +20,13 @@
 
         <div class="flex items-center space-x-6 tracking-wide text-white">
             @if (!user) {
-            <a class="hidden md:flex items-center space-x-2" routerLink="/prijava">
+            <a  #rla="routerLinkActive"
+                class="hidden md:flex items-center space-x-2 border-b-2 pb-0.5 transition-all duration-200"
+                [class]="rla.isActive ? 'border-yellow-400' : 'border-transparent'" 
+                routerLink="/prijava"
+                routerLinkActive>
                 <span>Prijava</span>
-
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="size-6">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="size-5">
                     <path fill-rule="evenodd"
                         d="M12.97 3.97a.75.75 0 0 1 1.06 0l7.5 7.5a.75.75 0 0 1 0 1.06l-7.5 7.5a.75.75 0 1 1-1.06-1.06l6.22-6.22H3a.75.75 0 0 1 0-1.5h16.19l-6.22-6.22a.75.75 0 0 1 0-1.06Z"
                         clip-rule="evenodd" />
@@ -30,7 +34,7 @@
             </a>
             } @else {
             <div class="hidden md:flex items-center space-x-4 cursor-pointer">
-                <a class="flex items-center space-x-2 group" routerLink="/prijava">
+                <a class="flex items-center space-x-2 group" routerLink="/profil">
                     <svg class="size-6 transition-all duration-200" xmlns="http://www.w3.org/2000/svg"
                         fill="currentColor" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round"
@@ -38,13 +42,8 @@
                     </svg>
 
                     <div class="flex flex-col">
-                        <span class="block font-medium truncate max-w-48 transition-all duration-200">
-                            {{ user.name }}
-                        </span>
-
-                        <span class="block text-xs truncate max-w-48 transition-all duration-200">
-                            {{ user.email }}
-                        </span>
+                        <span class="block font-medium truncate max-w-48 transition-all duration-200">{{ user.name }}</span>
+                        <span class="block text-xs truncate max-w-48 transition-all duration-200">{{ user.email }}</span>
                     </div>
                 </a>
 
@@ -56,14 +55,9 @@
             <button type="button" class="relative flex items-center space-x-2 pr-6">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
                     class="size-6 group-hover:text-slate-900">
-                    <path
-                        d="M2.25 2.25a.75.75 0 0 0 0 1.5h1.386c.17 0 .318.114.362.278l2.558 9.592a3.752 3.752 0 0 0-2.806 3.63c0 .414.336.75.75.75h15.75a.75.75 0 0 0 0-1.5H5.378A2.25 2.25 0 0 1 7.5 15h11.218a.75.75 0 0 0 .674-.421 60.358 60.358 0 0 0 2.96-7.228.75.75 0 0 0-.525-.965A60.864 60.864 0 0 0 5.68 4.509l-.232-.867A1.875 1.875 0 0 0 3.636 2.25H2.25ZM3.75 20.25a1.5 1.5 0 1 1 3 0 1.5 1.5 0 0 1-3 0ZM16.5 20.25a1.5 1.5 0 1 1 3 0 1.5 1.5 0 0 1-3 0Z" />
+                    <path d="M2.25 2.25a.75.75 0 0 0 0 1.5h1.386c.17 0 .318.114.362.278l2.558 9.592a3.752 3.752 0 0 0-2.806 3.63c0 .414.336.75.75.75h15.75a.75.75 0 0 0 0-1.5H5.378A2.25 2.25 0 0 1 7.5 15h11.218a.75.75 0 0 0 .674-.421 60.358 60.358 0 0 0 2.96-7.228.75.75 0 0 0-.525-.965A60.864 60.864 0 0 0 5.68 4.509l-.232-.867A1.875 1.875 0 0 0 3.636 2.25H2.25ZM3.75 20.25a1.5 1.5 0 1 1 3 0 1.5 1.5 0 0 1-3 0ZM16.5 20.25a1.5 1.5 0 1 1 3 0 1.5 1.5 0 0 1-3 0Z" />
                 </svg>
-
-                <span
-                    class="absolute -top-3 left-3 flex items-center justify-center h-6 p-2 rounded-full bg-red-600 text-sm truncate">
-                    3
-                </span>
+                <span class="absolute -top-3 left-3 flex items-center justify-center h-6 p-2 rounded-full bg-red-600 text-sm truncate">3</span>
             </button>
             }
 
@@ -89,13 +83,15 @@
     <div class="md:hidden flex flex-col transition-all duration-300 ease-in-out fixed right-0 top-16 z-50 w-full h-full sm:max-w-xs shadow-xl border-l border-l-gray-200 bg-white p-5"
         [class]="isVisible ? 'translate-x-0' : 'translate-x-full'">
         @if (!user) {
-            <a class="flex items-center space-x-2" routerLink="/prijava">
-                <span>Prijava</span>
-
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="size-6">
-                    <path fill-rule="evenodd"
-                        d="M12.97 3.97a.75.75 0 0 1 1.06 0l7.5 7.5a.75.75 0 0 1 0 1.06l-7.5 7.5a.75.75 0 1 1-1.06-1.06l6.22-6.22H3a.75.75 0 0 1 0-1.5h16.19l-6.22-6.22a.75.75 0 0 1 0-1.06Z"
-                        clip-rule="evenodd" />
+            <a  #rla="routerLinkActive"
+                class="flex items-center justify-between space-x-2"
+                [class]="rla.isActive ? 'text-teal-700 font-semibold' : 'font-medium text-gray-900 border-gray-300'"
+                routerLink="/prijava"
+                routerLinkActive
+                (click)="isVisible = false">
+                <span class="text-sm">Prijava</span>
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 9V5.25A2.25 2.25 0 0 1 10.5 3h6a2.25 2.25 0 0 1 2.25 2.25v13.5A2.25 2.25 0 0 1 16.5 21h-6a2.25 2.25 0 0 1-2.25-2.25V15M12 9l3 3m0 0-3 3m3-3H2.25" />
                 </svg>
             </a>
         } @else {
@@ -106,15 +102,9 @@
                         <path stroke-linecap="round" stroke-linejoin="round"
                             d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z" />
                     </svg>
-
                     <div class="flex flex-col">
-                        <span class="font-semibold text-sm line-clamp-1">
-                            {{ user.name }}
-                        </span>
-
-                        <span class="text-xs line-clamp-1">
-                            {{ user.email }}
-                        </span>
+                        <span class="font-semibold text-sm line-clamp-1">{{ user.name }}</span>
+                        <span class="text-xs line-clamp-1">{{ user.email }}</span>
                     </div>
                 </a>
 

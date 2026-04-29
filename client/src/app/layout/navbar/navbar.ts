@@ -35,11 +35,11 @@ export class Navbar {
   ]
 
   constructor(private sanitizer: DomSanitizer) {
-    this.user = {
-      id: 1,
-      name: 'John Doe',
-      email: 'john@example.com'
-    }
+    // this.user = {
+    //   id: 1,
+    //   name: 'John Doe',
+    //   email: 'john@example.com'
+    // }
   }
 
   sanitizeSvg(svg: string): SafeHtml {
