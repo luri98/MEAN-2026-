@@ -1,32 +1,54 @@
 import Product from '../models/Product.js'
 import Category from '../models/Category.js'
+import User from '../models/User.js'
+import bcrypt from 'bcryptjs'
 
-export const seedProducts = async () => {
+export const dbSeed = async () => {
   await Product.deleteMany()
-  
-  const proteinCategory = await Category.findOneAndUpdate(
-    { name: 'Protein' },
+
+  const users = [
+    {
+      name: 'Admin',
+      email: 'admin@example.com',
+      password: await bcrypt.hash('password', 10),
+      role: 'admin',
+    },
+    {
+      name: 'John Doe',
+      email: 'john@example.com',
+      password: await bcrypt.hash('password', 10),
+      role: 'user',
+    },
+    {
+      name: 'Ana Smith',
+      email: 'ana@example.com',
+      password: await bcrypt.hash('password', 10)
+    },
+  ]
+
+  for (const user of users)
+    await User.findOneAndUpdate({ email: user.email }, user, { upsert: true })
+
+  const categories = [
     {
       name: 'Protein',
-      description: ''
+      description: 'Supplements to support muscle growth and recovery' 
     },
-    {
-      returnDocument: 'after',
-      upsert: true
-    }
-  )
-
-  const kreatinCategory = await Category.findOneAndUpdate(
-    { name: 'Kreatin' },
     {
       name: 'Kreatin',
-      description: ''
+      description: 'Supplements to enhance strength and performance'
     },
     {
-      returnDocument: 'after',
-      upsert: true
+      name: 'Pre Workout',
+      description: 'Supplements to boost energy and focus before workouts'
     }
-  )
+  ]
+
+  const categoryDocs = []
+  for (const category of categories){
+    const doc = await Category.findOneAndUpdate({ name: category.name }, category, { upsert: true, returnDocument: 'after' })
+    categoryDocs[doc.name] = doc.id
+  }
 
   const products = [
     {
@@ -35,7 +57,7 @@ export const seedProducts = async () => {
       price: 29.99,
       stock: 50,
       image: '',
-      category: proteinCategory._id,
+      category: categoryDocs['Protein'],
       isActive: true
     },
     {
@@ -44,7 +66,7 @@ export const seedProducts = async () => {
       price: 31.99,
       stock: 45,
       image: '',
-      category: proteinCategory._id,
+      category: categoryDocs['Protein'],
       isActive: true
     },
     {
@@ -53,7 +75,7 @@ export const seedProducts = async () => {
       price: 30.99,
       stock: 40,
       image: '',
-      category: proteinCategory._id,
+      category: categoryDocs['Protein'],
       isActive: true
     },
     {
@@ -62,7 +84,7 @@ export const seedProducts = async () => {
       price: 39.99,
       stock: 35,
       image: '',
-      category: proteinCategory._id,
+      category: categoryDocs['Protein'],
       isActive: true
     },
     {
@@ -71,7 +93,7 @@ export const seedProducts = async () => {
       price: 41.99,
       stock: 30,
       image: '',
-      category: proteinCategory._id,
+      category: categoryDocs['Protein'],
       isActive: true
     },
     {
@@ -80,7 +102,7 @@ export const seedProducts = async () => {
       price: 49.99,
       stock: 25,
       image: '',
-      category: proteinCategory._id,
+      category: categoryDocs['Protein'],
       isActive: true
     },
     {
@@ -89,7 +111,7 @@ export const seedProducts = async () => {
       price: 51.99,
       stock: 22,
       image: '',
-      category: proteinCategory._id,
+      category: categoryDocs['Protein'],
       isActive: true
     },
     {
@@ -98,7 +120,7 @@ export const seedProducts = async () => {
       price: 34.99,
       stock: 28,
       image: '',
-      category: proteinCategory._id,
+      category: categoryDocs['Protein'],
       isActive: true
     },
     {
@@ -107,7 +129,7 @@ export const seedProducts = async () => {
       price: 32.99,
       stock: 33,
       image: '',
-      category: proteinCategory._id,
+      category: categoryDocs['Protein'],
       isActive: true
     },
     {
@@ -116,7 +138,7 @@ export const seedProducts = async () => {
       price: 2.99,
       stock: 100,
       image: '',
-      category: proteinCategory._id,
+      category: categoryDocs['Protein'],
       isActive: true
     },
     {
@@ -125,7 +147,7 @@ export const seedProducts = async () => {
       price: 19.99,
       stock: 60,
       image: '',
-      category: kreatinCategory._id,
+      category: categoryDocs['Kreatin'],
       isActive: true
     },
     {
@@ -134,7 +156,7 @@ export const seedProducts = async () => {
       price: 27.99,
       stock: 55,
       image: '',
-      category: kreatinCategory._id,
+      category: categoryDocs['Kreatin'],
       isActive: true
     },
     {
@@ -143,7 +165,7 @@ export const seedProducts = async () => {
       price: 24.99,
       stock: 48,
       image: '',
-      category: kreatinCategory._id,
+      category: categoryDocs['Kreatin'],
       isActive: true
     },
     {
@@ -152,7 +174,7 @@ export const seedProducts = async () => {
       price: 21.99,
       stock: 42,
       image: '',
-      category: kreatinCategory._id,
+      category: categoryDocs['Kreatin'],
       isActive: true
     },
     {
@@ -161,7 +183,7 @@ export const seedProducts = async () => {
       price: 29.99,
       stock: 36,
       image: '',
-      category: kreatinCategory._id,
+      category: categoryDocs['Kreatin'],
       isActive: true
     },
     {
@@ -170,7 +192,7 @@ export const seedProducts = async () => {
       price: 34.99,
       stock: 32,
       image: '',
-      category: kreatinCategory._id,
+      category: categoryDocs['Kreatin'],
       isActive: true
     },
     {
@@ -179,7 +201,7 @@ export const seedProducts = async () => {
       price: 22.99,
       stock: 44,
       image: '',
-      category: kreatinCategory._id,
+      category: categoryDocs['Kreatin'],
       isActive: true
     },
     {
@@ -188,7 +210,7 @@ export const seedProducts = async () => {
       price: 22.99,
       stock: 41,
       image: '',
-      category: kreatinCategory._id,
+      category: categoryDocs['Kreatin'],
       isActive: true
     },
     {
@@ -197,7 +219,7 @@ export const seedProducts = async () => {
       price: 37.99,
       stock: 29,
       image: '',
-      category: kreatinCategory._id,
+      category: categoryDocs['Kreatin'],
       isActive: true
     },
     {
@@ -206,12 +228,12 @@ export const seedProducts = async () => {
       price: 44.99,
       stock: 20,
       image: '',
-      category: kreatinCategory._id,
+      category: categoryDocs['Kreatin'],
       isActive: true
     }
   ]
 
   await Product.insertMany(products)
 
-  return products.length
+  return { number_of_users: users.length, number_of_categories: categories.length, number_of_products: products.length }
 }

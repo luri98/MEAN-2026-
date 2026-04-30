@@ -3,7 +3,7 @@ import cors from 'cors'
 import dotenv from 'dotenv'
 import connectDB from './config/db.js'
 import routes from './routes/index.js'
-import { seedProducts } from './seeders/productsSeeder.js'
+import { dbSeed } from './seeders/globalSeeder.js'
 
 dotenv.config()
 
@@ -17,12 +17,14 @@ app.listen(process.env.PORT, () => {
   console.log(`Server running on port ${process.env.PORT}`)
 })
 
-// Products Seeder //////////////////////////////////////////////
+// DB Seeder //////////////////////////////////////////////
 // try {
-//     const count = await seedProducts()
-//     console.log(`${count} products seeded successfully`)
+//   const { number_of_users, number_of_categories, number_of_products } = await dbSeed()
+//   console.log(`${number_of_users} user${number_of_users !== 1 ? 's' : ''} seeded successfully`)
+//   console.log(`${number_of_categories} category${number_of_categories !== 1 ? 'ies' : ''} seeded successfully`)
+//   console.log(`${number_of_products} product${number_of_products !== 1 ? 's' : ''} seeded successfully`)
 // } catch (error) {
-//     console.error('Error seeding products:', error)
+//   console.error('Error seeding database:', error)
 // }
 /////////////////////////////////////////////////////////////////
 

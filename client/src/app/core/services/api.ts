@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core'
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http'
 import { Observable } from 'rxjs'
+import { environment } from '../../../../enviorments/enviorment';
 
 type QueryParams = Record<string, string | number | boolean | null | undefined>
 
@@ -13,8 +14,8 @@ type RequestOptions = {
   providedIn: 'root'
 })
 export class Api {
-  private baseUrl = 'http://localhost:5050/api'
-
+  private baseUrl = environment.apiBaseUrl;
+  
   constructor(private http: HttpClient) {}
 
   get<T = any>(url: string, options: RequestOptions = {}): Observable<T> {
