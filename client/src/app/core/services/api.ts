@@ -14,7 +14,7 @@ type RequestOptions = {
   providedIn: 'root'
 })
 export class Api {
-  private baseUrl = environment.apiBaseUrl;
+  private baseUrl = environment.apiBaseUrl
   
   constructor(private http: HttpClient) {}
 
@@ -55,7 +55,8 @@ export class Api {
 
   private buildHeaders(headers?: Record<string, string>): HttpHeaders {
     let httpHeaders = new HttpHeaders({
-      Accept: 'application/json'
+      'Accept': 'application/json',
+      'Content-Type': 'application/json'
     })
 
     if (!headers) {
