@@ -4,19 +4,19 @@ import User from '../models/User.js'
 export const loginValidator = [
     body('email')
         .notEmpty()
-        .withMessage('Email is required')
+        .withMessage('Email je obavezan')
         .bail()
         .isString()
-        .withMessage('Email must be a string')
+        .withMessage('Email mora biti tekst')
         .bail()
         .isEmail()
-        .withMessage('Email must be valid')
+        .withMessage('Email mora biti ispravan')
         .bail()
         .custom(async email => {
             const user = await User.findOne({ email })
 
             if (!user) {
-                throw new Error('Email does not exist')
+                throw new Error('Email ne postoji')
             }
 
             return true
@@ -24,38 +24,38 @@ export const loginValidator = [
 
     body('password')
         .notEmpty()
-        .withMessage('Password is required')
+        .withMessage('Lozinka je obavezna')
         .bail()
         .isString()
-        .withMessage('Password must be a string')
+        .withMessage('Lozinka mora biti tekst')
 ]
 
 export const registerValidator = [
     body('name')
         .notEmpty()
-        .withMessage('Name is required')
+        .withMessage('Ime je obavezno')
         .bail()
         .isString()
-        .withMessage('Name must be a string')
+        .withMessage('Ime mora biti tekst')
         .bail()
         .isLength({ min: 2 })
-        .withMessage('Name must be at least 2 characters'),
+        .withMessage('Ime mora imati najmanje 2 karaktera'),
 
     body('email')
         .notEmpty()
-        .withMessage('Email is required')
+        .withMessage('Email je obavezan')
         .bail()
         .isString()
-        .withMessage('Email must be a string')
+        .withMessage('Email mora biti tekst')
         .bail()
         .isEmail()
-        .withMessage('Email must be valid')
+        .withMessage('Email mora biti ispravan')
         .bail()
         .custom(async email => {
             const user = await User.findOne({ email })
 
             if (user) {
-                throw new Error('Email already exists')
+                throw new Error('Email već postoji')
             }
 
             return true
@@ -63,11 +63,11 @@ export const registerValidator = [
 
     body('password')
         .notEmpty()
-        .withMessage('Password is required')
+        .withMessage('Lozinka je obavezna')
         .bail()
         .isString()
-        .withMessage('Password must be a string')
+        .withMessage('Lozinka mora biti tekst')
         .bail()
         .isLength({ min: 6 })
-        .withMessage('Password must be at least 6 characters')
+        .withMessage('Lozinka mora imati najmanje 6 karaktera')
 ]

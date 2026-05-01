@@ -12,12 +12,12 @@ type Credentials = {
 }
 
 @Component({
-  selector: 'app-login',
+  selector: 'app-registration',
   standalone: true,
   imports: [Input, Spinner],
-  templateUrl: './login.html'
+  templateUrl: './registration.html'
 })
-export class Login {
+export class Registration {
   private api = inject(Api)
   private router = inject(Router)
   private auth = inject(AuthService)
@@ -39,11 +39,11 @@ export class Login {
     }))
   }
 
-  login() {
+  register() {
     this.loading.set(true)
     this.formErrors.deleteAllErrors()
-    
-    this.api.post<{ token: string, user: any }>('/auth/login', this.credentials()).subscribe({
+
+    this.api.post<{ token: string, user: any }>('/auth/register', this.credentials()).subscribe({
       next: (response) => {
         this.auth.save({
           ...response.user,
