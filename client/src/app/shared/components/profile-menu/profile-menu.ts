@@ -90,8 +90,11 @@ export class ProfileMenu {
   }
 
   logout() {
-    this.auth.clear()
     this.isVisible = false
-    this.router.navigate(['/prijava'])
+    this.auth.clear()
+
+    setTimeout(() => {
+      this.router.navigate(['/prijava'])
+    })
   }
 }

@@ -1,87 +1,132 @@
-import { body } from 'express-validator'
-import User from '../models/User.js'
+import { body } from "express-validator";
+import User from "../models/User.js";
 
 export const loginValidator = [
-    body('email')
-        .notEmpty()
-        .withMessage('Email je obavezan')
-        .bail()
-        .isString()
-        .withMessage('Email mora biti tekst')
-        .bail()
-        .isEmail()
-        .withMessage('Email mora biti ispravan')
-        .bail()
-        .custom(async email => {
-            const user = await User.findOne({ email })
+  body("email")
+    .notEmpty()
+    .withMessage("Email je obavezan")
+    .bail()
+    .isString()
+    .withMessage("Email mora biti tekst")
+    .bail()
+    .isEmail()
+    .withMessage("Email mora biti ispravan")
+    .bail()
+    .custom(async (email) => {
+      const user = await User.findOne({ email });
 
-            if (!user) {
-                throw new Error('Email ne postoji')
-            }
+      if (!user) {
+        throw new Error("Email ne postoji");
+      }
 
-            return true
-        }),
+      return true;
+    }),
 
-    body('password')
-        .notEmpty()
-        .withMessage('Lozinka je obavezna')
-        .bail()
-        .isString()
-        .withMessage('Lozinka mora biti tekst')
-]
+  body("password")
+    .notEmpty()
+    .withMessage("Lozinka je obavezna")
+    .bail()
+    .isString()
+    .withMessage("Lozinka mora biti tekst"),
+];
 
 export const registerValidator = [
-    body('name')
-        .notEmpty()
-        .withMessage('Ime je obavezno')
-        .bail()
-        .isString()
-        .withMessage('Ime mora biti tekst')
-        .bail()
-        .isLength({ min: 2 })
-        .withMessage('Ime mora imati najmanje 2 karaktera'),
+  body("name")
+    .notEmpty()
+    .withMessage("Ime je obavezno")
+    .bail()
+    .isString()
+    .withMessage("Ime mora biti tekst")
+    .bail()
+    .isLength({ min: 2 })
+    .withMessage("Ime mora imati najmanje 2 karaktera"),
 
-    body('email')
-        .notEmpty()
-        .withMessage('Email je obavezan')
-        .bail()
-        .isString()
-        .withMessage('Email mora biti tekst')
-        .bail()
-        .isEmail()
-        .withMessage('Email mora biti ispravan')
-        .bail()
-        .custom(async email => {
-            const user = await User.findOne({ email })
+  body("email")
+    .notEmpty()
+    .withMessage("Email je obavezan")
+    .bail()
+    .isString()
+    .withMessage("Email mora biti tekst")
+    .bail()
+    .isEmail()
+    .withMessage("Email mora biti ispravan")
+    .bail()
+    .custom(async (email) => {
+      const user = await User.findOne({ email });
 
-            if (user) {
-                throw new Error('Email već postoji')
-            }
+      if (user) {
+        throw new Error("Email već postoji");
+      }
 
-            return true
-        }),
+      return true;
+    }),
 
-    body('password')
-        .notEmpty()
-        .withMessage('Lozinka je obavezna')
-        .bail()
-        .isString()
-        .withMessage('Lozinka mora biti tekst')
-        .bail()
-        .isLength({ min: 6 })
-        .withMessage('Lozinka mora imati najmanje 6 karaktera'),
-        
-    body('confirmPassword')
-        .notEmpty()
-        .withMessage('Potvrda lozinke je obavezna')
-        .bail()
-        .isString()
-        .withMessage('Potvrda lozinke mora biti tekst')
-        .bail()
-        .custom((value, { req }) => {
-            if (value !== req.body.password) {
-                throw new Error('Lozinke se ne poklapaju')
-            }
-            return true
-        })
-]
+  body("password")
+    .notEmpty()
+    .withMessage("Lozinka je obavezna")
+    .bail()
+    .isString()
+    .withMessage("Lozinka mora biti tekst")
+    .bail()
+    .isLength({ min: 6 })
+    .withMessage("Lozinka mora imati najmanje 6 karaktera"),
+
+  body("confirmPassword")
+    .notEmpty()
+    .withMessage("Potvrda lozinke je obavezna")
+    .bail()
+    .isString()
+    .withMessage("Potvrda lozinke mora biti tekst")
+    .bail()
+    .custom((value, { req }) => {
+      if (value !== req.body.password) {
+        throw new Error("Lozinke se ne poklapaju");
+      }
+      return true;
+    }),
+];
+
+export const forgottenPasswordValidator = [
+  body("email")
+    .notEmpty()
+    .withMessage("Email je obavezan")
+    .bail()
+    .isEmail()
+    .withMessage("Email nije validan")
+    .bail()
+    .custom(async (email) => {
+      const user = await User.findOne({ email });
+
+      if (!user) {
+        throw new Error("Email ne postoji");
+      }
+
+      return true;
+    }),
+];
+
+export const resetPasswordValidator = [
+  body("password")
+    .notEmpty()
+    .withMessage("Lozinka je obavezna")
+    .bail()
+    .isString()
+    .withMessage("Lozinka mora biti tekst")
+    .bail()
+    .isLength({ min: 6 })
+    .withMessage("Min 6 karaktera"),
+
+  body("confirmPassword")
+    .notEmpty()
+    .withMessage("Potvrda lozinke je obavezna")
+    .bail()
+    .isString()
+    .withMessage("Potvrda lozinke mora biti tekst")
+    .bail()
+    .custom((value, { req }) => {
+      if (value !== req.body.password) {
+        throw new Error("Lozinke se ne poklapaju");
+      }
+      return true;
+    }),
+];

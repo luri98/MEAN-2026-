@@ -1,5 +1,5 @@
 import { Component, inject, signal } from '@angular/core'
-import { Router } from '@angular/router'
+import { Router, RouterLink } from '@angular/router'
 import { Api } from '../../../app/core/services/api'
 import { FormErrorsService } from '../../../app/core/services/form-errors'
 import { AuthService } from '../../../app/core/services/auth'
@@ -14,7 +14,7 @@ type Credentials = {
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [Input, Spinner],
+  imports: [Input, Spinner, RouterLink],
   templateUrl: './login.html'
 })
 export class Login {
@@ -49,7 +49,7 @@ export class Login {
           ...response.user,
           token: response.token
         })
-
+        this.loading.set(false)
         this.router.navigate(['/'])
       },
       error: (err) => {
@@ -59,9 +59,6 @@ export class Login {
           this.formErrors.recordErrors([{ path: 'email', msg: 'Neispravni kredencijali' }]) 
         }
 
-        this.loading.set(false)
-      },
-      complete: () => {
         this.loading.set(false)
       }
     })

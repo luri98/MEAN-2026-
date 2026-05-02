@@ -1,36 +1,31 @@
-import { Component, inject, signal } from '@angular/core'
-import { Router } from '@angular/router'
-import { Api } from '../../../app/core/services/api'
-import { FormErrorsService } from '../../../app/core/services/form-errors'
-import { AuthService } from '../../../app/core/services/auth'
-import { Input } from '../../shared/components/input/input'
-import { Spinner } from '../../shared/components/spinner/spinner'
-import { AlertService } from '../../shared/services/alert'
+import { Component, inject, signal } from '@angular/core';
+import { Input } from '../../shared/components/input/input';
+import { Spinner } from '../../shared/components/spinner/spinner';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
+import { Api } from '../../core/services/api';
+import { FormErrorsService } from '../../core/services/form-errors';
+import { AlertService } from '../../shared/services/alert';
 
 type Form = {
-  email: string
   password: string
-  name: string,
   confirmPassword: string
 }
 
 @Component({
-  selector: 'app-registration',
-  standalone: true,
+  selector: 'app-reset-password',
   imports: [Input, Spinner],
-  templateUrl: './registration.html'
+  templateUrl: './reset-password.html',
+  styles: ``,
 })
-export class Registration {
+export class ResetPassword {
   private api = inject(Api)
   private router = inject(Router)
+  private route = inject(ActivatedRoute)
   private alert = inject(AlertService);
   readonly formErrors = inject(FormErrorsService)
 
   loading = signal(false)
-
   form = signal<Form>({
-    name: '',
-    email: '',
     password: '',
     confirmPassword: ''
   })
@@ -43,14 +38,15 @@ export class Registration {
     }))
   }
 
-  register() {
+  submit() {
     this.loading.set(true)
     this.formErrors.deleteAllErrors()
+    const token = this.route.snapshot.paramMap.get('token')
 
-    this.api.post<{ token: string, user: any }>('/auth/register', this.form()).subscribe({
+    this.api.post<{ token: string, user: any }>(`/auth/reset-password/${token}`, this.form()).subscribe({
       next: (response) => {
         this.loading.set(false)
-        this.alert.success('Uspješno ste se registrovali! Sada se možete prijaviti.')
+        this.alert.success('Uspješno ste promijenili lozinku! Sada se možete prijaviti.')
         this.router.navigate(['/prijava'])
       },
       error: (err) => {

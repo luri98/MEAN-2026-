@@ -12,38 +12,34 @@
 
       <!-- Form -->
       <div class="flex flex-col gap-5">
-
         <!-- Email -->
-        <div class="flex flex-col gap-1.5">
-          <app-input
-            inputId="email"
-            name="email"
-            type="email"
-            label="Email"
-            placeholder="Unesite Vašu email adresu"
-            [error]="formErrors.errors()['email']"
-            [value]="credentials().email"
-            (valueChange)="updateCredentials('email', $event)"/>
-        </div>
+        <app-input
+          inputId="email"
+          name="email"
+          type="email"
+          label="Email"
+          placeholder="Unesite Vašu email adresu"
+          [error]="formErrors.errors()['email']"
+          [value]="credentials().email"
+          (valueChange)="updateCredentials('email', $event)"/>
+
         <!-- Password -->
-        <div class="flex flex-col gap-1.5">
-          <app-input
-            inputId="password"
-            name="password"
-            type="password"
-            label="Lozinka"
-            placeholder="Unesite Vašu lozinku"
-            [error]="formErrors.errors()['password']"
-            [value]="credentials().password"
-            (valueChange)="updateCredentials('password', $event)"/>
-        </div>
+        <app-input
+          inputId="password"
+          name="password"
+          type="password"
+          label="Lozinka"
+          placeholder="Unesite Vašu lozinku"
+          [error]="formErrors.errors()['password']"
+          [value]="credentials().password"
+          (valueChange)="updateCredentials('password', $event)"/>
 
         <!-- Forgot password -->
-        <!-- <div class="flex justify-end -mt-2">
-          <a href="#" class="text-xs text-teal-600 hover:text-teal-700 transition-colors">
+        <div class="flex justify-end -mt-2">
+          <a routerLink="/zaboravljena-lozinka" class="text-xs text-teal-600 hover:underline transition-all">
             Zaboravljena lozinka?
           </a>
-        </div> -->
+        </div>
 
         <!-- Submit -->
         <button class="w-full py-2.5 px-4 bg-teal-600 hover:bg-teal-700 text-white text-sm font-medium rounded-lg transition-colors duration-150 flex items-center justify-center gap-2 cursor-pointer"
