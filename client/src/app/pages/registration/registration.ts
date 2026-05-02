@@ -5,10 +5,13 @@ import { FormErrorsService } from '../../../app/core/services/form-errors'
 import { AuthService } from '../../../app/core/services/auth'
 import { Input } from '../../shared/components/input/input'
 import { Spinner } from '../../shared/components/spinner/spinner'
+import { AlertService } from '../../shared/services/alert'
 
 type Credentials = {
   email: string
   password: string
+  name: string,
+  confirmPassword: string
 }
 
 @Component({
@@ -21,14 +24,16 @@ export class Registration {
   private api = inject(Api)
   private router = inject(Router)
   private auth = inject(AuthService)
-
-  formErrors = inject(FormErrorsService)
+  private alert = inject(AlertService);
+  readonly formErrors = inject(FormErrorsService)
 
   loading = signal(false)
 
   credentials = signal<Credentials>({
+    name: '',
     email: '',
-    password: ''
+    password: '',
+    confirmPassword: ''
   })
 
   updateCredentials(field: keyof Credentials, value: string) {
@@ -45,12 +50,7 @@ export class Registration {
 
     this.api.post<{ token: string, user: any }>('/auth/register', this.credentials()).subscribe({
       next: (response) => {
-        this.auth.save({
-          ...response.user,
-          token: response.token
-        })
-
-        this.router.navigate(['/'])
+        this.router.navigate(['/prijava'])
       },
       error: (err) => {
         if (err.status === 422) {
@@ -63,6 +63,7 @@ export class Registration {
       },
       complete: () => {
         this.loading.set(false)
+        this.alert.success('Uspješno ste se registrovali! Sada se možete prijaviti.')
       }
     })
   }

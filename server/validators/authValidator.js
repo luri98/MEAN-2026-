@@ -69,5 +69,19 @@ export const registerValidator = [
         .withMessage('Lozinka mora biti tekst')
         .bail()
         .isLength({ min: 6 })
-        .withMessage('Lozinka mora imati najmanje 6 karaktera')
+        .withMessage('Lozinka mora imati najmanje 6 karaktera'),
+        
+    body('confirmPassword')
+        .notEmpty()
+        .withMessage('Potvrda lozinke je obavezna')
+        .bail()
+        .isString()
+        .withMessage('Potvrda lozinke mora biti tekst')
+        .bail()
+        .custom((value, { req }) => {
+            if (value !== req.body.password) {
+                throw new Error('Lozinke se ne poklapaju')
+            }
+            return true
+        })
 ]

@@ -17,6 +17,7 @@ import { FormsModule } from '@angular/forms'
         [name]="name()"
         [type]="type()"
         [placeholder]="placeholder()"
+        [autocomplete]="inputId()"
         [ngModel]="value()"
         (ngModelChange)="value.set($event)"/>
         @if (error(); as errorMessage) {
