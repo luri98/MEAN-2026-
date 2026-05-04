@@ -1,5 +1,5 @@
 import { Component, inject, signal } from '@angular/core';
-import { AlertService } from '../../shared/services/alert';
+import { AlertService } from '../../core/services/alert';
 import { FormErrorsService } from '../../core/services/form-errors';
 import { Input } from '../../shared/components/input/input';
 import { Api } from '../../core/services/api';
@@ -37,5 +37,9 @@ export class ForgottenPassword {
         this.alert.success('Uskoro će vam stići e-mail za reset lozinke!')
       }
     }) 
+  }
+
+  ngOnInit() {
+    this.formErrors.deleteAllErrors()
   }
 }

@@ -4,7 +4,7 @@ import { Spinner } from '../../shared/components/spinner/spinner';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { Api } from '../../core/services/api';
 import { FormErrorsService } from '../../core/services/form-errors';
-import { AlertService } from '../../shared/services/alert';
+import { AlertService } from '../../core/services/alert';
 
 type Form = {
   password: string

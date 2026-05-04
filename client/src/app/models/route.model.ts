@@ -1,6 +1,6 @@
 export interface Route {
   name: string
   href: string
-  svg: string
+  svg?: string
   authRequired?: boolean
 }

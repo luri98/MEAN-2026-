@@ -5,7 +5,7 @@ import { Spinner } from '../../../../shared/components/spinner/spinner'
 import { Api } from '../../../../core/services/api'
 import { AuthService } from '../../../../core/services/auth'
 import { FormErrorsService } from '../../../../core/services/form-errors'
-import { AlertService } from '../../../../shared/services/alert'
+import { AlertService } from '../../../../core/services/alert'
 
 type Form = {
   name: string

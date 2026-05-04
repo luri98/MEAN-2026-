@@ -5,7 +5,7 @@ import { FormErrorsService } from '../../../app/core/services/form-errors'
 import { AuthService } from '../../../app/core/services/auth'
 import { Input } from '../../shared/components/input/input'
 import { Spinner } from '../../shared/components/spinner/spinner'
-import { AlertService } from '../../shared/services/alert'
+import { AlertService } from '../../core/services/alert'
 
 type Form = {
   email: string
