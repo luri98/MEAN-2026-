@@ -83,7 +83,40 @@ export const update = async (req, res) => {
       })
     }
 
-    res.json(user)
+    res.json({
+      user: {
+        id: user._id,
+        name: user.name,
+        email: user.email,
+        role: user.role,
+      },
+    })
+  } catch (error) {
+    res.status(400).json({
+      message: error.message
+    })
+  }
+}
+
+export const updatePassword = async (req, res) => {
+  try {
+    const user = await User.findByIdAndUpdate(
+      req.user.id,
+      {
+        password: await bcrypt.hash(req.body.newPassword, 10)
+      },
+      { new: true, runValidators: true }
+    )
+
+    if (!user) {
+      return res.status(404).json({
+        message: 'User not found'
+      })
+    }
+
+    res.json({
+      message: 'Password successfully changed'
+    })
   } catch (error) {
     res.status(400).json({
       message: error.message

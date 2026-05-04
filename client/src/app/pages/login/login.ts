@@ -42,21 +42,24 @@ export class Login {
   login() {
     this.loading.set(true)
     this.formErrors.deleteAllErrors()
-    
+
     this.api.post<{ token: string, user: any }>('/auth/login', this.credentials()).subscribe({
       next: (response) => {
-        this.auth.save({
-          ...response.user,
-          token: response.token
+        this.router.navigate(['/'], {
+          state: { user: response.user, token: response.token }
+        }).then(() => {
+          this.loading.set(false)
+          this.auth.save({
+            ...response.user,
+            token: response.token
+          })
         })
-        this.loading.set(false)
-        this.router.navigate(['/'])
       },
       error: (err) => {
         if (err.status === 422) {
           this.formErrors.recordErrors(err.error.errors)
-        }else if(err.status == 401){
-          this.formErrors.recordErrors([{ path: 'email', msg: 'Neispravni kredencijali' }]) 
+        } else if (err.status == 401) {
+          this.formErrors.recordErrors([{ path: 'email', msg: 'Neispravni kredencijali' }])
         }
 
         this.loading.set(false)

@@ -87,7 +87,7 @@ export const forgottenPassword = async (req, res) => {
     const user = await User.findOne({ email: req.body.email });
 
     if (!user) {
-      return res.status(404).json({ message: "Korisnik ne postoji" });
+      return res.status(404).json({ message: "User not founded" });
     }
 
     const resetToken = crypto.randomBytes(32).toString("hex");

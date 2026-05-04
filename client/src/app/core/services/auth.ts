@@ -1,4 +1,4 @@
-import { Injectable, signal, inject, PLATFORM_ID } from '@angular/core'
+import { Injectable, signal, inject, PLATFORM_ID, computed } from '@angular/core'
 import { isPlatformBrowser } from '@angular/common'
 import { User } from '../../models/user.model'
 
@@ -13,6 +13,7 @@ export class AuthService {
   private isBrowser = isPlatformBrowser(this.platformId)
 
   private user = signal<User | null>(this.loadFromStorage())
+  readonly isAdmin = computed(() => this.user()?.role === 'admin');
 
   private loadFromStorage(): User | null {
     if (!this.isBrowser) return null

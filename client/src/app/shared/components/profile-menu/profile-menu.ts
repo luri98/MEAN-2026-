@@ -34,7 +34,8 @@ import { AuthService } from '../../../core/services/auth';
                     [class]="$index === 0 ? 'rounded-t-lg' : ''"
                     [routerLink]="route.href" 
                     routerLinkActive
-                    [routerLinkActiveOptions]="{ exact: route.href === '/' }">
+                    [routerLinkActiveOptions]="{ exact: route.href === '/' }"
+                    (click)="isVisible = false">
                     <div class="flex items-center space-x-2">
                         <span [innerHTML]="sanitizeSvg(route.svg)"></span>
                         <span class="text-xs uppercase">{{ route.name }}</span>

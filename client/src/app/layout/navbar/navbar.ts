@@ -1,4 +1,4 @@
-import { Component, computed, inject } from '@angular/core';
+import { afterNextRender, Component, computed, inject, signal } from '@angular/core';
 import { Router, RouterLink, RouterLinkActive } from '@angular/router';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { AuthService } from '../../core/services/auth';
@@ -18,9 +18,10 @@ export class Navbar {
   private sanitizer = inject(DomSanitizer)
 
   isVisible = false
-
+  clientReady = signal(false);
   user = this.auth.getUser()
 
+  
   routes = computed<Route[]>(() => {
     const user = this.user()
 
@@ -108,6 +109,11 @@ export class Navbar {
     return routes
   })
 
+  constructor() {
+    afterNextRender(() => {
+      this.clientReady.set(true);
+    });
+  }
 
   sanitizeSvg(svg: string): SafeHtml {
     return this.sanitizer.bypassSecurityTrustHtml(svg)
@@ -123,6 +129,7 @@ export class Navbar {
       this.auth.clear()
       this.router.navigate(['/prijava'])
     }, 300)
-  } 
+  }
+   
 
 }
