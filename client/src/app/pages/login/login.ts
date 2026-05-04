@@ -41,7 +41,6 @@ export class Login {
 
   login() {
     this.loading.set(true)
-    this.formErrors.deleteAllErrors()
 
     this.api.post<{ token: string, user: any }>('/auth/login', this.credentials()).subscribe({
       next: (response) => {
@@ -65,5 +64,9 @@ export class Login {
         this.loading.set(false)
       }
     })
+  }
+
+  ngOnInit() {
+    this.formErrors.deleteAllErrors()
   }
 }

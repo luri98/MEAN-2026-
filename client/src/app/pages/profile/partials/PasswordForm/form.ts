@@ -95,7 +95,7 @@ export class PasswordForm {
       [field]: value
     }))
   }
-
+  
   submit() {
     this.loading.set(true)
     this.formErrors.deleteAllErrors()

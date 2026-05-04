@@ -45,8 +45,7 @@ export class Registration {
 
   register() {
     this.loading.set(true)
-    this.formErrors.deleteAllErrors()
-
+    
     this.api.post<{ token: string, user: any }>('/auth/register', this.form()).subscribe({
       next: (response) => {
         this.loading.set(false)
@@ -60,5 +59,9 @@ export class Registration {
         this.loading.set(false)
       }
     })
+  }
+
+  ngOnInit() {
+    this.formErrors.deleteAllErrors()
   }
 }
