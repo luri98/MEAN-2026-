@@ -1,5 +1,5 @@
 import { Component } from '@angular/core'
-import { AdminSidebar } from '../../../layout/admin/sidebar/sidebar';
+import { AdminSidebar } from '../components/sidebar/sidebar';
 import { RouterOutlet } from '@angular/router';
 
 @Component({

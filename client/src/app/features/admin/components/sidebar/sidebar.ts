@@ -1,9 +1,9 @@
 import { Component, inject, signal } from "@angular/core";
 import { NavigationEnd, Router, RouterLink, RouterLinkActive } from "@angular/router";
-import { Spinner } from "../../../shared/components/spinner/spinner";
+import { Spinner } from "../../../../shared/components/spinner/spinner";
 import { DomSanitizer, SafeHtml } from "@angular/platform-browser";
-import { AuthService } from "../../../core/services/auth";
-import { Route } from "../../../models/route.model";
+import { AuthService } from "../../../../core/services/auth";
+import { Route } from "../../../../models/route.model";
 import { toSignal } from '@angular/core/rxjs-interop';
 import { filter, map, startWith } from "rxjs";
 
