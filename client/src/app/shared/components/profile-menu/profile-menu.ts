@@ -37,7 +37,7 @@ import { AuthService } from '../../../core/services/auth';
                     [routerLinkActiveOptions]="{ exact: route.href === '/' }"
                     (click)="isVisible = false">
                     <div class="flex items-center space-x-2">
-                        <span [innerHTML]="sanitizeSvg(route.svg)"></span>
+                        @if(route.svg){<span [innerHTML]="sanitizeSvg(route.svg)"></span>}
                         <span class="text-xs uppercase">{{ route.name }}</span>
                     </div>
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
