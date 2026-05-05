@@ -47,7 +47,7 @@ type Form = {
           (valueChange)="updateForm('email', $event)"/>
 
         <!-- Submit -->
-        <button class="mt-10 md:mt-auto w-full py-2.5 px-4 bg-teal-600 hover:bg-teal-700 text-white text-sm font-medium rounded-lg transition-colors duration-150 flex items-center justify-center gap-2 cursor-pointer"
+        <button class="mt-10 md:mt-auto w-full py-2.5 px-4 bg-teal-600 hover:bg-teal-700 text-white text-sm font-medium rounded-lg transition-colors duration-150 flex items-center justify-center gap-2"
             [class]="loading() ? 'pointer-events-none' : 'cursor-pointer'"
             [disabled]="loading()"
             (click)="submit()">
