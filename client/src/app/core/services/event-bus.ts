@@ -2,13 +2,13 @@ import { Injectable, signal } from '@angular/core';
 import { Subject } from 'rxjs';
 
 @Injectable({ providedIn: 'root' })
-export class UiAdminService {
-  private createClickedSubject = new Subject<void>();
+export class EventBusService {
+  private eventSubject = new Subject<any>();
 
-  createClicked$ = this.createClickedSubject.asObservable();
+  event$ = this.eventSubject.asObservable();
 
-  triggerCreate() {
-    this.createClickedSubject.next();
+  emit(event:any) {
+    this.eventSubject.next(event);
   }
 
   private loading = signal(false);

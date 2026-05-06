@@ -3,7 +3,8 @@ import { NavigationEnd, Router, RouterLink, RouterLinkActive } from "@angular/ro
 import { Spinner } from "../../../../shared/components/spinner/spinner";
 import { toSignal } from "@angular/core/rxjs-interop";
 import { filter, map, startWith } from "rxjs";
-import { UiAdminService } from "../../../../core/services/ui-admin";
+import { EventBusService } from "../../../../core/services/event-bus";
+import { UiStateService } from "../../../../core/services/ui-state";
 
 @Component({
     selector: 'app-admin-header',
@@ -12,7 +13,7 @@ import { UiAdminService } from "../../../../core/services/ui-admin";
         <header class="w-full lg:border-b border-gray-200 px-6 lg:px-8 lg:py-4 mt-6 lg:mt-0 flex items-center space-x-6 justify-end lg:justify-between lg:min-h-20">
             <div class="min-w-0 flex-1 hidden lg:flex items-center space-x-6 w-full">
                 <h1 class="text-xl text-gray-900 sm:truncate tracking-[0.34px] font-semibold">{{ sectionName() }}</h1>
-                @if (ui.getLoading()()) { <app-spinner color="#00695C" /> }
+                @if (uiState.loading()) { <app-spinner color="#00695C" /> }
             </div>
             <button class="flex items-center justify-center gap-2 py-2.5 px-4 bg-teal-600 hover:bg-teal-700  rounded-lg transition-colors duration-150 cursor-pointer"
                 (click)="emitCreate()">
@@ -27,7 +28,8 @@ import { UiAdminService } from "../../../../core/services/ui-admin";
 
 export class AdminHeader {
     private router = inject(Router)
-    readonly ui = inject(UiAdminService);
+    readonly eventBus = inject(EventBusService);
+    readonly uiState = inject(UiStateService);
 
     loading = signal(true)
 
@@ -49,6 +51,6 @@ export class AdminHeader {
     );
 
     emitCreate() {
-        this.ui.triggerCreate();
+        this.eventBus.emit({type: 'action:create'});
     }
 }

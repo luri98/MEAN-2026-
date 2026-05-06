@@ -4,9 +4,9 @@ import { Spinner } from "../../../../shared/components/spinner/spinner";
 import { DomSanitizer, SafeHtml } from "@angular/platform-browser";
 import { AuthService } from "../../../../core/services/auth";
 import { Route } from "../../../../models/route.model";
-import { takeUntilDestroyed, toSignal } from '@angular/core/rxjs-interop';
+import { toSignal } from '@angular/core/rxjs-interop';
 import { filter, map, startWith } from "rxjs";
-import { UiAdminService } from "../../../../core/services/ui-admin";
+import { UiStateService } from "../../../../core/services/ui-state";
 
 @Component({
     selector: 'app-admin-sidebar',
@@ -19,7 +19,7 @@ export class AdminSidebar {
     private router = inject(Router)
     private sanitizer = inject(DomSanitizer)
     private auth = inject(AuthService)
-    readonly ui = inject(UiAdminService)
+    readonly uiState = inject(UiStateService)
 
     showMobileDrawer = signal(false)
 
